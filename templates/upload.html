@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-4">
+    <i class="bi bi-cloud-arrow-up"></i> Upload Evidence File
+</h3>
+<p class="text-muted mb-4">Upload a digital evidence file. A SHA-256 hash will be generated and stored for future
+    integrity verification.</p>
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label class="form-label fw-semibold">Select evidence file:</label>
+        <input type="file" name="file" class="form-control" accept=".py,.txt,.pdf,.jpg,.jpeg,.png,.mp4,.doc,.docx,.xls,.xlsx,.zip,.rar,.log,.csv" required>
+    </div>
+    <button type="submit" class="btn btn-primary">
+        <i class="bi bi-upload"></i> Upload
+    </button>
+</form>
+
+{% endblock %}

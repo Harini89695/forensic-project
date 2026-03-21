@@ -1,0 +1,28 @@
+[
+    // Run Flask App - Ctrl+Shift+F5
+    {
+        "key": "ctrl+shift+f5",
+        "command": "workbench.action.tasks.runTask",
+        "args": "Run Flask App"
+    },
+    
+    // Run Python File - Ctrl+Alt+P
+    {
+        "key": "ctrl+alt+p",
+        "command": "python.execInTerminal"
+    },
+    
+    // Debug Flask App - F5
+    {
+        "key": "f5",
+        "command": "workbench.action.debug.start",
+        "when": "!inDebugMode"
+    },
+    
+    // Stop Flask App - Shift+F5
+    {
+        "key": "shift+f5",
+        "command": "workbench.action.debug.stop",
+        "when": "inDebugMode"
+    }
+]

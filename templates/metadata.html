@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-3">
+    <i class="bi bi-info-circle"></i> File Metadata Analyzer
+</h3>
+<p class="text-muted mb-4">Upload a file to extract its metadata — file properties, cryptographic hashes, and EXIF data
+    (for images).</p>
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label class="form-label fw-semibold">Select a file to analyze:</label>
+        <input type="file" name="file" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-info text-white">
+        <i class="bi bi-search"></i> Analyze File
+    </button>
+</form>
+
+{% if file_meta %}
+<hr class="my-4">
+
+<!-- Basic File Information -->
+<div class="card border-info mb-4">
+    <div class="card-header bg-info text-white">
+        <i class="bi bi-file-earmark-text"></i> Basic File Information
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <tbody>
+                    <tr>
+                        <th style="width: 30%;">File Name</th>
+                        <td>{{ file_meta.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Extension</th>
+                        <td><span class="badge bg-secondary">{{ file_meta.extension }}</span></td>
+                    </tr>
+                    <tr>
+                        <th>MIME Type</th>
+                        <td><code>{{ file_meta.mime_type }}</code></td>
+                    </tr>
+                    <tr>
+                        <th>File Size</th>
+                        <td>{{ file_meta.size_readable }} ({{ file_meta.size_bytes }} bytes)</td>
+                    </tr>
+                    <tr>
+                        <th>Created</th>
+                        <td>{{ file_meta.created }}</td>
+                    </tr>
+                    <tr>
+                        <th>Last Modified</th>
+                        <td>{{ file_meta.modified }}</td>
+                    </tr>
+                    <tr>
+                        <th>Last Accessed</th>
+                        <td>{{ file_meta.accessed }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Hash Values -->
+<div class="card border-success mb-4">
+    <div class="card-header bg-success text-white">
+        <i class="bi bi-fingerprint"></i> Cryptographic Hashes
+    </div>
+    <div class="card-body">
+        <div class="mb-3">
+            <strong>SHA-256:</strong>
+            <div class="fingerprint-value mt-1">{{ file_meta.hashes.sha256 }}</div>
+        </div>
+        <div class="mb-3">
+            <strong>SHA-1:</strong>
+            <div class="fingerprint-value mt-1">{{ file_meta.hashes.sha1 }}</div>
+        </div>
+        <div>
+            <strong>MD5:</strong>
+            <div class="fingerprint-value mt-1">{{ file_meta.hashes.md5 }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- EXIF Data (if available) -->
+{% if exif_data %}
+<div class="card border-warning mb-4">
+    <div class="card-header bg-warning text-dark">
+        <i class="bi bi-camera"></i> EXIF Metadata (Image)
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width: 35%;">Property</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in exif_data.items() %}
+                    <tr>
+                        <td><strong>{{ key }}</strong></td>
+                        <td style="word-break: break-all;">{{ value }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% elif file_meta %}
+<div class="alert alert-secondary">
+    <i class="bi bi-info-circle"></i> No EXIF metadata available for this file type. EXIF data is typically found in
+    JPEG and TIFF image files.
+</div>
+{% endif %}
+
+{% endif %}
+
+{% endblock %}

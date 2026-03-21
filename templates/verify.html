@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3 class="mb-4">Verify File Integrity</h3>
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <input type="file" name="file" class="form-control" accept=".py,.txt,.pdf,.jpg,.jpeg,.png,.mp4,.doc,.docx,.xls,.xlsx,.zip,.rar,.log,.csv" required>
+    </div>
+
+    <button type="submit" class="btn btn-success">Verify</button>
+</form>
+
+{% if result %}
+<div class="alert mt-4 
+    {% if 'Authentic' in result %}
+        alert-success
+    {% elif 'Modified' in result %}
+        alert-danger
+    {% else %}
+        alert-warning
+    {% endif %}
+">
+    {{ result }}
+</div>
+{% endif %}
+
+{% endblock %}

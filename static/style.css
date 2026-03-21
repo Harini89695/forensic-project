@@ -1,0 +1,165 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f6f9;
+}
+
+/* -------------------------
+   Navbar
+   ------------------------- */
+.navbar {
+    background-color: #1f2937 !important;
+    padding: 10px 0;
+}
+
+.navbar-brand {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* -------------------------
+   Container & Cards
+   ------------------------- */
+.container.mt-5 > .card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+h2, h3 {
+    font-weight: 700;
+    color: #111827;
+}
+
+/* -------------------------
+   Form Elements
+   ------------------------- */
+input[type="file"] {
+    margin-bottom: 10px;
+}
+
+button, .btn {
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+button:hover, .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* -------------------------
+   Status Messages
+   ------------------------- */
+.success {
+    color: #15803d;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+.error {
+    color: #b91c1c;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+.warning {
+    color: #b45309;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+/* -------------------------
+   Tables
+   ------------------------- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+    vertical-align: middle;
+}
+
+table th {
+    background-color: #f9fafb;
+    font-weight: 600;
+}
+
+table tr:hover {
+    background-color: #f0f4ff;
+}
+
+/* -------------------------
+   Fingerprint Hash Display
+   ------------------------- */
+.fingerprint-value {
+    background: #eaf6ff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    word-break: break-all;
+    border: 1px solid #b2ddff;
+    color: #1e3a5f;
+}
+
+/* -------------------------
+   Dashboard Cards
+   ------------------------- */
+.card {
+    transition: all 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12) !important;
+}
+
+.card-title {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+/* -------------------------
+   Badge Styles
+   ------------------------- */
+.badge {
+    font-size: 0.85em;
+    padding: 5px 10px;
+}
+
+/* -------------------------
+   Alerts
+   ------------------------- */
+.alert {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+/* -------------------------
+   Code Blocks
+   ------------------------- */
+code {
+    background: #f8f9fa;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #1f2937;
+}
+
+/* -------------------------
+   Responsive Fixes
+   ------------------------- */
+@media (max-width: 768px) {
+    .navbar .btn {
+        margin-bottom: 4px;
+        font-size: 12px;
+    }
+}

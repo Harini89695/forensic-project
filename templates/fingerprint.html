@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-4">
+    <i class="bi bi-fingerprint"></i> File Fingerprint Tool
+</h3>
+<p class="text-muted mb-4">Generate cryptographic fingerprints (hash values) for files or compare two files. These unique digital signatures help verify file integrity.</p>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs mb-4" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="single-tab" data-bs-toggle="tab" data-bs-target="#single" type="button" role="tab">Single File Fingerprint</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="compare-tab" data-bs-toggle="tab" data-bs-target="#compare" type="button" role="tab">Compare Two Files</button>
+    </li>
+</ul>
+
+<!-- Tab content -->
+<div class="tab-content">
+    <!-- Single File Tab -->
+    <div class="tab-pane fade show active" id="single" role="tabpanel">
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Select a file:</label>
+                <input type="file" name="file" class="form-control" accept=".py,.txt,.pdf,.jpg,.jpeg,.png,.mp4,.doc,.docx,.xls,.xlsx,.zip,.rar,.log,.csv">
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-hash"></i> Generate Fingerprint
+            </button>
+        </form>
+
+        {% if file_info %}
+        <div class="mt-4">
+            <h5 class="text-success"><i class="bi bi-check-circle"></i> Fingerprint Result</h5>
+            <div class="card border-success mt-3">
+                <div class="card-body">
+                    <p><strong>File Name:</strong> {{ file_info.name }}</p>
+                    <p><strong>File Size:</strong> {{ file_info.size }} bytes</p>
+                    <hr>
+                    <div class="mb-2">
+                        <strong>SHA-256:</strong>
+                        <div class="fingerprint-value mt-1">{{ file_info.sha256 }}</div>
+                    </div>
+                    <div class="mb-2">
+                        <strong>SHA-1:</strong>
+                        <div class="fingerprint-value mt-1">{{ file_info.sha1 }}</div>
+                    </div>
+                    <div class="mb-2">
+                        <strong>MD5:</strong>
+                        <div class="fingerprint-value mt-1">{{ file_info.md5 }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Compare Tab -->
+    <div class="tab-pane fade" id="compare" role="tabpanel">
+        <form method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card border-primary mb-3">
+                        <div class="card-header bg-primary text-white">
+                            <i class="bi bi-file-earmark"></i> File 1
+                        </div>
+                        <div class="card-body">
+                            <input type="file" name="file1" class="form-control" accept=".py,.txt,.pdf,.jpg,.jpeg,.png,.mp4,.doc,.docx,.xls,.xlsx,.zip,.rar,.log,.csv">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-secondary mb-3">
+                        <div class="card-header bg-secondary text-white">
+                            <i class="bi bi-file-earmark"></i> File 2
+                        </div>
+                        <div class="card-body">
+                            <input type="file" name="file2" class="form-control" accept=".py,.txt,.pdf,.jpg,.jpeg,.png,.mp4,.doc,.docx,.xls,.xlsx,.zip,.rar,.log,.csv">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-warning btn-lg">
+                    <i class="bi bi-arrow-left-right"></i> Compare Files
+                </button>
+            </div>
+        </form>
+
+        {% if comparison_result %}
+        <hr class="my-4">
+
+        {% if comparison_result.match %}
+        <div class="alert alert-success text-center fs-5">
+            <i class="bi bi-check-circle-fill"></i> <strong>MATCH!</strong> — Both files are identical.
+        </div>
+        {% else %}
+        <div class="alert alert-danger text-center fs-5">
+            <i class="bi bi-x-circle-fill"></i> <strong>MISMATCH!</strong> — The files are different.
+        </div>
+        {% endif %}
+
+        <h5 class="mt-4 mb-3">Hash Comparison Table</h5>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width: 15%;">Algorithm</th>
+                        <th style="width: 35%;">{{ comparison_result.file1_name }} ({{ comparison_result.file1_size }} bytes)</th>
+                        <th style="width: 35%;">{{ comparison_result.file2_name }} ({{ comparison_result.file2_size }} bytes)</th>
+                        <th style="width: 15%;" class="text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>SHA-256</strong></td>
+                        <td><code style="font-size: 11px; word-break: break-all;">{{ comparison_result.file1_hashes.sha256 }}</code></td>
+                        <td><code style="font-size: 11px; word-break: break-all;">{{ comparison_result.file2_hashes.sha256 }}</code></td>
+                        <td class="text-center">
+                            {% if comparison_result.file1_hashes.sha256 == comparison_result.file2_hashes.sha256 %}
+                            <span class="badge bg-success">Match</span>
+                            {% else %}
+                            <span class="badge bg-danger">Mismatch</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>SHA-1</strong></td>
+                        <td><code style="font-size: 11px; word-break: break-all;">{{ comparison_result.file1_hashes.sha1 }}</code></td>
+                        <td><code style="font-size: 11px; word-break: break-all;">{{ comparison_result.file2_hashes.sha1 }}</code></td>
+                        <td class="text-center">
+                            {% if comparison_result.file1_hashes.sha1 == comparison_result.file2_hashes.sha1 %}
+                            <span class="badge bg-success">Match</span>
+                            {% else %}
+                            <span class="badge bg-danger">Mismatch</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>MD5</strong></td>
+                        <td><code style="font-size: 11px; word-break: break-all;">{{ comparison_result.file1_hashes.md5 }}</code></td>
+                        <td><code style="font-size: 11px; word-break: break-all;">{{ comparison_result.file2_hashes.md5 }}</code></td>
+                        <td class="text-center">
+                            {% if comparison_result.file1_hashes.md5 == comparison_result.file2_hashes.md5 %}
+                            <span class="badge bg-success">Match</span>
+                            {% else %}
+                            <span class="badge bg-danger">Mismatch</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

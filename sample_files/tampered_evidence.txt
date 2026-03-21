@@ -1,0 +1,6 @@
+This is the original forensic evidence file.
+Case #2026-001
+Date: 2026-02-19
+Officer: Selva
+Description: Digital evidence recovered from suspect device.
+NOTE: This line was added by someone tampering with the evidence!

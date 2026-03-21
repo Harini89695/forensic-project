@@ -1,0 +1,32 @@
+DIGITAL FORENSIC EVIDENCE REPORT
+
+Case ID: DF-2026-105
+Evidence ID: EVID-TXT-001
+Investigating Officer: Inspector Arjun Mehta
+Department: Cyber Crime Division
+Date of Collection: 18-02-2026
+Time of Collection: 14:30 Hours
+Location of Collection: Digital Evidence Lab
+
+Evidence Type: Text Document
+Original File Name: evidence.txt
+File Format: .txt
+Storage Medium: Local System Storage
+
+Description of Evidence:
+This document serves as a sample digital forensic evidence file created for the purpose of demonstrating file integrity verification using SHA-256 cryptographic hashing.
+
+Purpose:
+The file is submitted to the Digital File Authentication System to validate authenticity and detect any unauthorized modifications.
+
+Chain of Custody Log:
+----------------------------------------------------
+18-02-2026 | 14:30 | Evidence Collected by Inspector Arjun Mehta
+18-02-2026 | 15:00 | Submitted to Digital Authentication System
+18-02-2026 | 15:05 | Hash Value Generated and Stored Securely
+----------------------------------------------------
+
+Integrity Declaration:
+At the time of submission, this file remains unaltered. Any modification to the content of this file will result in a change in the computed SHA-256 hash value, indicating possible tampering.
+
+End of Evidence Report.

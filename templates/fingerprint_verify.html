@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-3">
+    <i class="bi bi-file-earmark-diff"></i> Fingerprint Verification
+</h3>
+<p class="text-muted mb-4">Upload two files to compare their cryptographic fingerprints. If all hashes match, the files
+    are identical.</p>
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card border-primary mb-3">
+                <div class="card-header bg-primary text-white">
+                    <i class="bi bi-file-earmark"></i> File 1
+                </div>
+                <div class="card-body">
+                    <input type="file" name="file1" class="form-control" accept=".py,.txt,.pdf,.jpg,.jpeg,.png,.mp4,.doc,.docx,.xls,.xlsx,.zip,.rar,.log,.csv" required>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-secondary mb-3">
+                <div class="card-header bg-secondary text-white">
+                    <i class="bi bi-file-earmark"></i> File 2
+                </div>
+                <div class="card-body">
+                    <input type="file" name="file2" class="form-control" accept=".py,.txt,.pdf,.jpg,.jpeg,.png,.mp4,.doc,.docx,.xls,.xlsx,.zip,.rar,.log,.csv" required>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-warning btn-lg">
+            <i class="bi bi-arrow-left-right"></i> Compare Files
+        </button>
+    </div>
+</form>
+
+{% if result %}
+<hr class="my-4">
+
+{% if result.match %}
+<div class="alert alert-success text-center fs-5">
+    <i class="bi bi-check-circle-fill"></i> <strong>MATCH!</strong> — Both files are identical.
+</div>
+{% else %}
+<div class="alert alert-danger text-center fs-5">
+    <i class="bi bi-x-circle-fill"></i> <strong>MISMATCH!</strong> — The files are different.
+</div>
+{% endif %}
+
+<h5 class="mt-4 mb-3">Hash Comparison Table</h5>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th style="width: 15%;">Algorithm</th>
+                <th style="width: 35%;">{{ result.file1_name }} ({{ result.file1_size }} bytes)</th>
+                <th style="width: 35%;">{{ result.file2_name }} ({{ result.file2_size }} bytes)</th>
+                <th style="width: 15%;" class="text-center">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>SHA-256</strong></td>
+                <td><code style="font-size: 11px; word-break: break-all;">{{ result.file1_hashes.sha256 }}</code></td>
+                <td><code style="font-size: 11px; word-break: break-all;">{{ result.file2_hashes.sha256 }}</code></td>
+                <td class="text-center">
+                    {% if result.file1_hashes.sha256 == result.file2_hashes.sha256 %}
+                    <span class="badge bg-success">Match</span>
+                    {% else %}
+                    <span class="badge bg-danger">Mismatch</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td><strong>SHA-1</strong></td>
+                <td><code style="font-size: 11px; word-break: break-all;">{{ result.file1_hashes.sha1 }}</code></td>
+                <td><code style="font-size: 11px; word-break: break-all;">{{ result.file2_hashes.sha1 }}</code></td>
+                <td class="text-center">
+                    {% if result.file1_hashes.sha1 == result.file2_hashes.sha1 %}
+                    <span class="badge bg-success">Match</span>
+                    {% else %}
+                    <span class="badge bg-danger">Mismatch</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td><strong>MD5</strong></td>
+                <td><code style="font-size: 11px; word-break: break-all;">{{ result.file1_hashes.md5 }}</code></td>
+                <td><code style="font-size: 11px; word-break: break-all;">{{ result.file2_hashes.md5 }}</code></td>
+                <td class="text-center">
+                    {% if result.file1_hashes.md5 == result.file2_hashes.md5 %}
+                    <span class="badge bg-success">Match</span>
+                    {% else %}
+                    <span class="badge bg-danger">Mismatch</span>
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="text-center py-4">
+    <h2 class="fw-bold mb-3">
+        <i class="bi bi-shield-lock text-primary"></i> Digital Forensics File Integrity System
+    </h2>
+
+    <p class="text-muted fs-5 mb-4">
+        Upload files, generate SHA-256 hash values, verify evidence integrity, compare files, and extract metadata — all
+        in one secure platform.
+    </p>
+
+    {% if session.get("user") %}
+    <div class="row g-3 mt-3">
+        <div class="col-md-4">
+            <div class="card h-100 border-primary shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-cloud-arrow-up text-primary fs-1"></i>
+                    <h5 class="card-title mt-2">Upload Evidence</h5>
+                    <p class="card-text text-muted small">Upload digital evidence and generate SHA-256 hashes
+                        automatically.</p>
+                    <a href="/upload" class="btn btn-primary btn-sm">Go to Upload</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-success shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-check-circle text-success fs-1"></i>
+                    <h5 class="card-title mt-2">Verify Integrity</h5>
+                    <p class="card-text text-muted small">Re-upload a file to verify if it has been tampered with.</p>
+                    <a href="/verify" class="btn btn-success btn-sm">Go to Verify</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-warning shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-file-earmark-diff text-warning fs-1"></i>
+                    <h5 class="card-title mt-2">Compare Files</h5>
+                    <p class="card-text text-muted small">Upload two files and compare their hashes side by side.</p>
+                    <a href="/fingerprint_verify" class="btn btn-warning btn-sm">Go to Compare</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-secondary shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-fingerprint text-secondary fs-1"></i>
+                    <h5 class="card-title mt-2">File Fingerprint</h5>
+                    <p class="card-text text-muted small">Generate SHA-256, SHA-1, and MD5 fingerprints for any file.
+                    </p>
+                    <a href="/fingerprint" class="btn btn-secondary btn-sm">Go to Fingerprint</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-dark shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-journal-text text-dark fs-1"></i>
+                    <h5 class="card-title mt-2">Activity Logs</h5>
+                    <p class="card-text text-muted small">View all uploaded evidence records and download PDF reports.
+                    </p>
+                    <a href="/logs" class="btn btn-dark btn-sm">Go to Logs</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="mt-4">
+        <a href="/login" class="btn btn-primary btn-lg">
+            <i class="bi bi-box-arrow-in-right"></i> Login to Get Started
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
